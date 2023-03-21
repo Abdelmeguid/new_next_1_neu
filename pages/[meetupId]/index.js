@@ -52,9 +52,12 @@ export async function getStaticProps(context) {
   const db = client.db();
 
   const meetupsCollection = db.collection("MIG");
+  if ((meetupsCollection._id = null)) {
+    return;
+  }
 
   const selectedMeetup = await meetupsCollection.findOne({
-    _id: new ObjectId(meetupId) || undefined,
+    _id: new ObjectId(meetupId),
   });
 
   client.close();
