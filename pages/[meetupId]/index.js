@@ -29,8 +29,7 @@ export async function getStaticPaths() {
 
   const meetupsCollection = db.collection("MIG");
 
-  const meetups =
-    (await meetupsCollection.find({}, { _id: 1 }).toArray()) || undefined;
+  const meetups = await meetupsCollection.find({}, { _id: 1 }).toArray();
 
   client.close();
 
@@ -55,7 +54,7 @@ export async function getStaticProps(context) {
   const meetupsCollection = db.collection("MIG");
 
   const selectedMeetup = await meetupsCollection.findOne({
-    _id: new ObjectId(meetupId),
+    _id: new ObjectId(meetupId) || [],
   });
 
   client.close();
