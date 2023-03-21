@@ -52,6 +52,9 @@ export async function getStaticProps(context) {
   const db = client.db();
 
   const meetupsCollection = db.collection("MIG");
+  if (!meetupsCollection._id) {
+    throw new Error("Please add your Mongo URI to .env.local");
+  }
 
   const selectedMeetup = await meetupsCollection.findOne({
     _id: new ObjectId(meetupId),
